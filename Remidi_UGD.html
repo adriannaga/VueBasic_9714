@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Tebak Angka</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>Game Tebak Angka 1-10</h2>
+        <div class="d-flex justify-content-left">
+            <div class="card border-primary my-5">
+                
+                <div class="card-header">Game Tebak angka 1-10 </div>
+                <div class="card-body text-primary">
+                    <input type="number" class="form-control" v-model="tebakan" :disabled="isDisabled" placeholder="tebak angkanya...."/>
+                    <br>
+                    <button class="btn btn-primary btn-sm" @click="tebak" :disabled="isDisabled">Tebak</button>
+                    <br>
+                    Nyawa : {{ nyawa }}
+                </div>
+            </div>
+        </div>
+        <div class="text-left" v-show="benar">
+            <p>Yeeee Benar :) :) :)</p> 
+            <button class="btn btn-primary" @click="mainlagi" >main lagi</button>
+        </div>
+        <div class="text-left" v-show="kalah">
+            <p>Anda Kalah :( </p> 
+            <button class="btn btn-primary" @click="mainlagi" >main lagi</button>
+        </div>
+        <div class="text-left" v-show="salah">
+            <p>Ayo Tebak Lagi, Jangan Menyerah !!! </p> 
+            <button class="btn btn-warning" @click="cobalagi" >Coba lagi</button>
+        </div>
+        {{ angka }}
+        <footer class="text-left mt-5">
+            {{ `${mhs.nama} | ${mhs.npm} | ${mhs.kelas}` }}
+        </footer>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            angka: Math.floor(Math.random() * 10)+1,
+            tebakan:0,
+            nyawa:3,
+            salah:undefined,
+            benar:undefined,
+            kalah:undefined,
+            isDisabled:false,
+            mhs: {
+                nama:'Adrian Naga Putra',
+                npm: '180709714',
+                kelas: 'B',
+            },
+        },
+        methods: {
+           tebak(){
+            if(this.tebakan == this.angka){
+                this.benar = 1;
+            }else {
+                    this.salah =1;
+                    this.isDisabled = true;
+                    this.nyawa--;
+                    if(this.nyawa==0){
+                        this.kalah=1;
+                        this.salah = undefined;
+                    }
+            }
+               
+           },
+           cobalagi(){
+                this.isDisabled = false;
+                this.salah = undefined;
+           },
+           mainlagi(){
+               location.reload();
+           }
+        },
+ 
+    });
+</script>
+</html>
